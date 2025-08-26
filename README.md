@@ -1,8 +1,6 @@
-# www.thvu.dev
+## Blog. Showcase. Portfolio.
 
-Blog. Showcase. Portfolio.
-
-Tech I used to build this site:
+Tech used to build this site:
 
 - TypeScript
 - Next.js
