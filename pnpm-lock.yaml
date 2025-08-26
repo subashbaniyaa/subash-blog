@@ -23,9 +23,6 @@ importers:
       '@notionhq/client':
         specifier: ^1.0.4
         version: 1.0.4
-      '@prisma/client':
-        specifier: 6.14.0
-        version: 6.14.0(prisma@6.14.0(typescript@5.9.2))(typescript@5.9.2)
       '@sentry/nextjs':
         specifier: 6.16.1
         version: 6.16.1(next@14.1.0(@babel/core@7.28.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(webpack@5.101.3(esbuild@0.14.54))
