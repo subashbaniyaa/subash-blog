@@ -1,5 +1,4 @@
 import siteMetadata from "@/data/siteMetadata";
-import SocialIcon from "@/components/SocialIcon";
 import { PageSEO } from "@/components/SEO";
 import Image from "next/image";
 import { getAbout } from "@/lib/cms/datocms";
