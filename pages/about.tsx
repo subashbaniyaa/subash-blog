@@ -5,8 +5,7 @@ import Image from "next/image";
 import { getAbout } from "@/lib/cms/datocms";
 import { InferGetStaticPropsType } from "next";
 import PageTitle from "@/components/PageTitle";
-import { StructuredText, renderRule } from "react-datocms";
-import { isLink } from "datocms-structured-text-utils";
+import { StructuredText } from "react-datocms";
 import CustomLink from "@/components/CustomLink";
 
 export default function About({ about }: InferGetStaticPropsType<typeof getStaticProps>) {
@@ -70,11 +69,12 @@ export default function About({ about }: InferGetStaticPropsType<typeof getStati
         <div className="pt-8 pb-8 prose dark:prose-dark max-w-none xl:col-span-2">
           <StructuredText
             data={content}
-            customRules={[
-              renderRule(isLink, ({ node, children }) => (
-                <CustomLink href={node.url}>{children}</CustomLink>
-              )),
-            ]}
+            renderNode={{
+              link: ({ children, record }) => {
+                const url = (record as any).url;
+                return <CustomLink href={url}>{children}</CustomLink>;
+              },
+            }}
           />
 
           <div className="mt-14">
