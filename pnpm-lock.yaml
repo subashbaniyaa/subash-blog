@@ -44,6 +44,9 @@ importers:
       date-fns:
         specifier: ^2.26.0
         version: 2.30.0
+      datocms-structured-text-utils:
+        specifier: ^5.0.0
+        version: 5.0.0
       esbuild:
         specifier: ^0.14.0
         version: 0.14.54
@@ -84,7 +87,7 @@ importers:
         specifier: ^18.2.0
         version: 18.3.1
       react-datocms:
-        specifier: ^1.6.3
+        specifier: ^1.6.9
         version: 1.6.9(react@18.3.1)
       react-dom:
         specifier: ^18.2.0
@@ -2150,6 +2153,9 @@ packages:
 
   datocms-structured-text-utils@1.2.0:
     resolution: {integrity: sha512-8qfpSWU/nVrMr8C0aT5n16WN0/KQbtYD2GJXd9WDf01bfr+WzJCi5szZF1dBLhD2zhs41A4gtO3aM4J1CQe4wA==}
+
+  datocms-structured-text-utils@5.0.0:
+    resolution: {integrity: sha512-orMYif1+D/5zTkZ/LgQpgm0yCF/JSyy8ANVrCLGaOib/xSLOSM5PEcbkYgaky/cjzgsF70fMZnUlcDdIWY00og==}
 
   debug@2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
@@ -7637,6 +7643,10 @@ snapshots:
       datocms-structured-text-utils: 1.2.0
 
   datocms-structured-text-utils@1.2.0:
+    dependencies:
+      array-flatten: 3.0.0
+
+  datocms-structured-text-utils@5.0.0:
     dependencies:
       array-flatten: 3.0.0
 
