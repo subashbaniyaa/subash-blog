@@ -5,12 +5,13 @@ import Image from "next/image";
 import { getAbout } from "@/lib/cms/datocms";
 import { InferGetStaticPropsType } from "next";
 import PageTitle from "@/components/PageTitle";
-import { renderRule, StructuredText } from "react-datocms";
+
+// ✅ Correct imports
+import { StructuredText, renderNodeRule } from "datocms-structured-text-react-renderer";
 import { isLink } from "datocms-structured-text-utils";
 import CustomLink from "@/components/CustomLink";
 
 export default function About({ about }: InferGetStaticPropsType<typeof getStaticProps>) {
-  // Fallback UI if no about data
   if (!about) {
     return (
       <>
@@ -71,11 +72,9 @@ export default function About({ about }: InferGetStaticPropsType<typeof getStati
         <div className="pt-8 pb-8 prose dark:prose-dark max-w-none xl:col-span-2">
           <StructuredText
             data={content}
-            customRules={[
-              renderRule(isLink, ({ node, children }) => (
-                <CustomLink href={node.url}>{children}</CustomLink>
-              )),
-            ]}
+            renderNode={renderNodeRule(isLink, ({ node, children }) => (
+              <CustomLink href={node.url}>{children}</CustomLink>
+            ))}
           />
 
           <div className="mt-14">
