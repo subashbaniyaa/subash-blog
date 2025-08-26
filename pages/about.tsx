@@ -5,8 +5,6 @@ import Image from "next/image";
 import { getAbout } from "@/lib/cms/datocms";
 import { InferGetStaticPropsType } from "next";
 import PageTitle from "@/components/PageTitle";
-
-// ✅ FIXED imports
 import { StructuredText, renderRule } from "react-datocms";
 import { isLink } from "datocms-structured-text-utils";
 import CustomLink from "@/components/CustomLink";
