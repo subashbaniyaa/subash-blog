@@ -7,11 +7,16 @@ import { InferGetStaticPropsType } from "next";
 import PageTitle from "@/components/PageTitle";
 
 // ✅ Correct imports
-import { StructuredText, renderNodeRule } from "datocms-structured-text-react-renderer";
+import {
+  StructuredText,
+  renderNodeRule,
+} from "datocms-structured-text-react-renderer";
 import { isLink } from "datocms-structured-text-utils";
 import CustomLink from "@/components/CustomLink";
 
-export default function About({ about }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function About({
+  about,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   if (!about) {
     return (
       <>
@@ -21,7 +26,9 @@ export default function About({ about }: InferGetStaticPropsType<typeof getStati
         />
         <div className="pt-6 pb-8 space-y-2 md:space-y-5">
           <PageTitle>About</PageTitle>
-          <p className="text-gray-600 dark:text-gray-400">No about data available.</p>
+          <p className="text-gray-600 dark:text-gray-400">
+            No about data available.
+          </p>
         </div>
       </>
     );
@@ -58,7 +65,9 @@ export default function About({ about }: InferGetStaticPropsType<typeof getStati
             </div>
           )}
 
-          <h3 className="pt-4 pb-2 text-2xl font-bold leading-8 tracking-tight">{name}</h3>
+          <h3 className="pt-4 pb-2 text-2xl font-bold leading-8 tracking-tight">
+            {name}
+          </h3>
           <div className="text-gray-500 dark:text-gray-400">{title}</div>
           <div className="flex pt-6 space-x-3">
             <SocialIcon kind="mail" href={`mailto:${siteMetadata.email}`} />
@@ -70,12 +79,18 @@ export default function About({ about }: InferGetStaticPropsType<typeof getStati
 
         {/* Right column */}
         <div className="pt-8 pb-8 prose dark:prose-dark max-w-none xl:col-span-2">
-          <StructuredText
-            data={content}
-            renderNode={renderNodeRule(isLink, ({ node, children }) => (
-              <CustomLink href={node.url}>{children}</CustomLink>
-            ))}
-          />
+          {content ? (
+            <StructuredText
+              data={content}
+              renderNode={[
+                renderNodeRule(isLink, ({ node, children }) => (
+                  <CustomLink href={node.url}>{children}</CustomLink>
+                )),
+              ]}
+            />
+          ) : (
+            <p>No content provided.</p>
+          )}
 
           <div className="mt-14">
             <p className="text-gray-300 dark:text-gray-700">
