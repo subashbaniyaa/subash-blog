@@ -43,7 +43,11 @@ export interface About {
   name: string;
   title: string;
   updatedAt: string;
-  content: StructuredTextDocument | null;
+  content: {
+    value: StructuredTextDocument;
+    links?: any[];
+    blocks?: any[];
+  } | null;
   profilepicture?: {
     blurhash?: string;
     alt?: string;
@@ -52,17 +56,34 @@ export interface About {
   } | null;
 }
 
-// Fetch about info
+// Fetch about info (works for single or collection model)
 export async function getAbout(preview: boolean) {
   const data = await fetchAPI(
     `
-    {
-      about {
+    query AboutQuery {
+      about: about {
         name
         title
         updatedAt
         content {
           value
+          links {
+            __typename
+            ... on PageRecord {
+              id
+              slug
+            }
+          }
+          blocks {
+            __typename
+            ... on ImageBlockRecord {
+              id
+              image {
+                url
+                alt
+              }
+            }
+          }
         }
         profilepicture {
           blurhash
@@ -71,15 +92,42 @@ export async function getAbout(preview: boolean) {
           blurUpThumb
         }
       }
+
+      aboutPage: aboutPage {
+        name
+        title
+        updatedAt
+        content {
+          value
+        }
+        profilepicture {
+          url
+          alt
+        }
+      }
+
+      allAbouts {
+        name
+        title
+        updatedAt
+        content {
+          value
+        }
+        profilepicture {
+          url
+          alt
+        }
+      }
     }
   `,
     { preview }
   );
 
-  if (!data?.about) return null;
+  // Handle whichever exists
+  const about =
+    data?.about || data?.aboutPage || (data?.allAbouts?.length ? data.allAbouts[0] : null);
 
-  return {
-    ...data.about,
-    content: data.about.content?.value ?? null,
-  } as About;
+  if (!about) return null;
+
+  return about as About;
 }

@@ -1,30 +1,15 @@
 import siteMetadata from "@/data/siteMetadata";
 import { PageSEO } from "@/components/SEO";
-import Image from "next/image";
-import { getAbout } from "@/lib/cms/datocms";
-import { InferGetStaticPropsType } from "next";
 import PageTitle from "@/components/PageTitle";
-import { StructuredText } from "react-datocms";
-import CustomLink from "@/components/CustomLink";
+import { MDXLayoutRenderer } from "@/components/MDXComponents";
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
+import { bundleMDX } from "mdx-bundler";
 
-export default function About({ about }: InferGetStaticPropsType<typeof getStaticProps>) {
-  if (!about) {
-    return (
-      <>
-        <PageSEO
-          title={`About - ${siteMetadata.author}`}
-          description={`About me - ${siteMetadata.author}`}
-        />
-        <div className="pt-6 pb-8 space-y-2 md:space-y-5">
-          <PageTitle>About</PageTitle>
-          <p className="text-gray-600 dark:text-gray-400">No about data available.</p>
-        </div>
-      </>
-    );
-  }
+const DEFAULT_LAYOUT = "PostLayout";
 
-  const { name, title, profilepicture, content, updatedAt } = about;
-
+export default function About({ mdxSource, frontMatter }) {
   return (
     <>
       <PageSEO
@@ -34,71 +19,29 @@ export default function About({ about }: InferGetStaticPropsType<typeof getStati
       <div className="pt-6 pb-8 space-y-2 md:space-y-5">
         <PageTitle>About</PageTitle>
       </div>
-
-      <div className="items-start space-y-2 xl:grid xl:grid-cols-3 xl:gap-x-8 xl:space-y-0">
-        {/* Left column */}
-        <div className="flex flex-col items-center xl:items-start pt-8 xl:sticky xl:top-12">
-          {profilepicture?.url ? (
-            <Image
-              src={profilepicture.url}
-              width={192}
-              height={192}
-              alt={profilepicture.alt || name}
-              className="rounded-full xl:rounded-lg"
-              placeholder={profilepicture.blurUpThumb ? "blur" : "empty"}
-              blurDataURL={profilepicture.blurUpThumb || undefined}
-            />
-          ) : (
-            <div className="w-48 h-48 rounded-full bg-gray-300 dark:bg-gray-700 flex items-center justify-center">
-              <span className="text-gray-600 dark:text-gray-400">No image</span>
-            </div>
-          )}
-
-          <h3 className="pt-4 pb-2 text-2xl font-bold leading-8 tracking-tight">{name}</h3>
-          <div className="text-gray-500 dark:text-gray-400">{title}</div>
-          <div className="flex pt-6 space-x-3">
-            <SocialIcon kind="mail" href={`mailto:${siteMetadata.email}`} />
-            <SocialIcon kind="github" href={siteMetadata.github} />
-            <SocialIcon kind="codepen" href={siteMetadata.codepen} />
-            <SocialIcon kind="twitter" href={siteMetadata.twitter} />
-          </div>
-        </div>
-
-        {/* Right column */}
-        <div className="pt-8 pb-8 prose dark:prose-dark max-w-none xl:col-span-2">
-          <StructuredText
-            data={content}
-            renderNode={{
-              link: ({ children, record }) => {
-                const url = (record as any).url;
-                return <CustomLink href={url}>{children}</CustomLink>;
-              },
-            }}
-          />
-
-          <div className="mt-14">
-            <p className="text-gray-300 dark:text-gray-700">
-              Last updated at{" "}
-              <time dateTime={updatedAt}>
-                {new Date(updatedAt).toLocaleDateString(siteMetadata.locale, {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </time>
-            </p>
-          </div>
-        </div>
-      </div>
+      <MDXLayoutRenderer
+        layout={DEFAULT_LAYOUT}
+        mdxSource={mdxSource}
+        frontMatter={frontMatter}
+      />
     </>
   );
 }
 
-export async function getStaticProps({ preview = false }) {
-  const about = await getAbout(preview);
+export async function getStaticProps() {
+  const source = fs.readFileSync(path.join(process.cwd(), "data/about/about.mdx"), "utf8");
+
+  const { content, data } = matter(source);
+
+  const mdxSource = await bundleMDX({ source: content });
 
   return {
-    props: { about },
-    revalidate: 60,
+    props: {
+      mdxSource: mdxSource.code,
+      frontMatter: {
+        ...data,
+        date: data.date ? new Date(data.date).toISOString() : null,
+      },
+    },
   };
 }
