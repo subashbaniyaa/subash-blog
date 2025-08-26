@@ -5,7 +5,7 @@
   "packageManager": "pnpm@10.0.0",
   "scripts": {
     "dev": "pnpm clean && TAILWIND_MODE=watch next dev",
-    "build": "npx prisma generate && next build && node ./scripts/generate-sitemap",
+    "build": "next build && node ./scripts/generate-sitemap",
     "clean": "rm -rf ./.next",
     "serve": "next start",
     "analyze": "env ANALYZE=true next build",
