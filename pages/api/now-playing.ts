@@ -1,5 +1,4 @@
 import { getNowPlaying } from "@/lib/spotify";
-import { withSentry } from "@sentry/nextjs";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export interface NowPlayingSong {

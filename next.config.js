@@ -1,14 +1,9 @@
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
+
 // const withPWA = require("next-pwa");
 // const runtimeCaching = require("next-pwa/cache");
-
-const { withSentryConfig } = require("@sentry/nextjs");
-
-const SentryWebpackPluginOptions = {
-  silent: true,
-};
 
 const isDevelopment = process.env.NODE_ENV === "development";
 
@@ -30,17 +25,11 @@ const nextConfig = {
   },
   images: {
     domains: [
-      // project hero
       "images.unsplash.com",
-      // cms assets
       "www.datocms-assets.com",
-      // twitter profile picture
       "pbs.twimg.com",
-      // google avatar
       "lh3.googleusercontent.com",
-      // github avatar
       "avatars.githubusercontent.com",
-      // line avatar
       "profile.line-scdn.net",
     ],
   },
@@ -75,21 +64,9 @@ const nextConfig = {
       use: ["@svgr/webpack"],
     });
 
-    // if (!dev && !isServer) {
-    //   // Replace React with Preact only in client production build
-    //   Object.assign(config.resolve.alias, {
-    //     "react/jsx-runtime.js": "preact/compat/jsx-runtime",
-    //     react: "preact/compat",
-    //     "react-dom/test-utils": "preact/test-utils",
-    //     "react-dom": "preact/compat",
-    //   });
-    // }
-
     return config;
   },
   // experimental: { appDir: true },
 };
 
-module.exports = isDevelopment
-  ? nextConfig
-  : withSentryConfig(withBundleAnalyzer(nextConfig), SentryWebpackPluginOptions);
+module.exports = withBundleAnalyzer(nextConfig);
