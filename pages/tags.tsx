@@ -7,10 +7,11 @@ import kebabCase from "@/lib/utils/kebabCase";
 import { InferGetStaticPropsType } from "next";
 
 export const getStaticProps = async () => {
-  const tags = await getAllTags("blog");
-
+  // Return empty tags
+  const tags = {};
   return { props: { tags } };
 };
+
 
 export default function Tags({ tags }: InferGetStaticPropsType<typeof getStaticProps>) {
   const sortedTags = Object.keys(tags).sort((a, b) => tags[b] - tags[a]);
