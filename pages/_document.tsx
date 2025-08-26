@@ -76,14 +76,14 @@ class MyDocument extends Document {
           crossOrigin="anonymous"
         />
         {/* favicons */}
-        <link rel="apple-touch-icon" sizes="180x180" href="/static/favicons/apple-touch-icon.png" />
-        <link rel="icon" type="image/svg+xml" href="/static/favicons/favicon.svg" />
-        <link rel="icon" type="image/png" href="/static/favicons/favicon.png" />
-        <link rel="manifest" href="manifest.json" />
-        <link rel="mask-icon" href="/static/favicons/safari-pinned-tab.svg" color="#5bbad5" />
-        <link rel="shortcut icon" href="/static/favicons/favicon.svg" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/static/images/eren.jpeg" />
+        <link rel="icon" type="image/svg+xml" href="/static/images/eren.jpeg" />
+        <link rel="icon" type="image/png" href="/static/images/eren.jpeg" />
+        <link rel="manifest" href="/static/images/eren.jpeg" />
+        <link rel="mask-icon" href="/static/images/eren.jpeg" color="#5bbad5" />
+        <link rel="shortcut icon" href="/static/images/eren.jpeg" />
         <meta name="msapplication-TileColor" content="#2b5797" />
-        <meta name="msapplication-config" content="/static/favicons/browserconfig.xml" />
+        <meta name="msapplication-config" content="/static/images/eren.jpeg" />
         <meta name="theme-color" content="#ffffff" />
         {/* rss */}
         <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
