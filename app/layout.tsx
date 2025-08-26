@@ -4,13 +4,13 @@ import { AppProviders } from "@/components/AppProviders";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "THVu",
-  description: "THVu's site",
+  title: "Subash",
+  description: "Subash's site",
   openGraph: {
     type: "website",
     locale: "en_IE",
-    url: "https://thvu.dev",
-    siteName: "THVu",
+    url: "https://subash-baniya.com.np",
+    siteName: "Subash",
   },
 };
 
