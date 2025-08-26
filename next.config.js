@@ -93,11 +93,3 @@ const nextConfig = {
 module.exports = isDevelopment
   ? nextConfig
   : withSentryConfig(withBundleAnalyzer(nextConfig), SentryWebpackPluginOptions);
-
-module.exports = {
-  ...nextConfig,
-  experimental: {
-    serverActions: true,
-  },
-  output: "standalone", // important for Vercel serverless
-};
