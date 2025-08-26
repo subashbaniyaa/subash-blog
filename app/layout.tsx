@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: "Subash's site",
   openGraph: {
     type: "website",
-    locale: "en_IE",
+    locale: "en_NP",
     url: "https://subash-baniya.com.np",
     siteName: "Subash",
   },
