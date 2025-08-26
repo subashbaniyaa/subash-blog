@@ -1,29 +1,44 @@
 "use server";
 
 import { auth } from "auth";
-import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
+// In-memory endorsements storage
+let endorsements: {
+  skillId: number;
+  userId: string;
+  createdAt: Date;
+}[] = [];
+
+/**
+ * Give an endorsement to a skill
+ */
 export const giveEndorsement = async (
-  prevState: {
-    message: string;
-  },
+  prevState: { message: string },
   formData: FormData
 ) => {
   try {
-    const skillId = formData.get("skillId");
+    const skillId = Number(formData.get("skillId"));
     const session = await auth();
-    if (!session) {
-      return {
-        message: "Unauthorized",
-      };
+
+    if (!session?.user?.id) {
+      return { message: "Unauthorized" };
     }
 
-    await prisma.endorsement.create({
-      data: {
-        skill_id: Number(skillId),
-        userId: session.id as string,
-      },
+    // Prevent duplicate endorsements by same user
+    const alreadyEndorsed = endorsements.some(
+      (e) => e.skillId === skillId && e.userId === session.user.id
+    );
+
+    if (alreadyEndorsed) {
+      return { message: "You have already endorsed this skill." };
+    }
+
+    // Add new endorsement
+    endorsements.push({
+      skillId,
+      userId: session.user.id,
+      createdAt: new Date(),
     });
 
     revalidatePath("/endorsements");
@@ -31,9 +46,8 @@ export const giveEndorsement = async (
     return {
       message: `You have successfully endorsed the skill with ID: ${skillId}`,
     };
-  } catch {
-    return {
-      message: "Failed to endorse the skill.",
-    };
+  } catch (error) {
+    console.error(error);
+    return { message: "Failed to endorse the skill." };
   }
 };

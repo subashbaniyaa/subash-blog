@@ -2,11 +2,8 @@ import NextAuth, { NextAuthConfig } from "next-auth";
 import Google from "next-auth/providers/google";
 import GitHub from "next-auth/providers/github";
 import Line from "next-auth/providers/line";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import prisma from "@/lib/prisma";
 
 export const authConfig: NextAuthConfig = {
-  adapter: PrismaAdapter(prisma),
   debug: process.env.NODE_ENV !== "production",
   providers: [
     Google,

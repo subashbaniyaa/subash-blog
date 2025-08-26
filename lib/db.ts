@@ -1,8 +1,62 @@
 import { getAllFilesFrontMatter } from "./mdx";
-import prisma from "./prisma";
 import { GuestBookEntry } from "./types/guestbook";
 import { Skill, SkillCategory } from "./types/skill";
 import { User } from "./types/user";
+
+// ---------- Mock Data ----------
+
+// Users
+const users: User[] = [
+  { id: "user1", name: "Alice", image: "/images/alice.png" },
+  { id: "user2", name: "Bob", image: "/images/bob.png" },
+];
+
+// Skills and Categories
+const skillCategoriesMock: SkillCategory[] = [
+  {
+    name: "Frontend",
+    skills: [
+      {
+        id: "101",
+        name: "React",
+        users: [users[0], users[1]],
+      },
+      {
+        id: "102",
+        name: "Tailwind CSS",
+        users: [],
+      },
+    ],
+  },
+  {
+    name: "Backend",
+    skills: [
+      {
+        id: "201",
+        name: "Node.js",
+        users: [],
+      },
+    ],
+  },
+];
+
+// Guestbook entries
+const guestbookEntriesMock: GuestBookEntry[] = [
+  {
+    id: "1",
+    body: "Great blog!",
+    updated_at: new Date().toISOString(),
+    user: users[0],
+  },
+  {
+    id: "2",
+    body: "Very informative.",
+    updated_at: new Date().toISOString(),
+    user: users[1],
+  },
+];
+
+// ---------- Functions ----------
 
 export async function getAllBlogPosts() {
   try {
@@ -14,61 +68,20 @@ export async function getAllBlogPosts() {
   }
 }
 
-export async function getAllSkillsByCategory() {
+export async function getAllSkillsByCategory(): Promise<SkillCategory[]> {
   try {
-    const skillsByCategory = await prisma.skillCategory.findMany({
-      include: {
-        skills_in_category: {
-          include: {
-            endorsements: {
-              include: {
-                user: true,
-              },
-            },
-          },
-        },
-      },
-    });
-
-    return skillsByCategory.map<SkillCategory>((category) => ({
-      name: category.name,
-      skills: category.skills_in_category.map<Skill>((skill) => ({
-        id: skill.id.toString(),
-        name: skill.name,
-        users: skill.endorsements
-          .filter((en) => en.userId)
-          .map<User>((en) => ({
-            id: en.user!.id,
-            name: en.user!.name!,
-            image: en.user!.image!,
-          })),
-      })),
-    }));
+    // Return mock data instead of querying Prisma
+    return skillCategoriesMock;
   } catch (error) {
     console.error("Error getting skills: ", error);
     return [];
   }
 }
 
-export async function getGuestbookEntries() {
+export async function getGuestbookEntries(): Promise<GuestBookEntry[]> {
   try {
-    const entries = await prisma.guestbook.findMany({
-      orderBy: {
-        updated_at: "desc",
-      },
-      select: { id: true, body: true, updated_at: true, user: true },
-    });
-
-    return entries.map<GuestBookEntry>((entry) => ({
-      id: entry.id.toString(),
-      body: entry.body,
-      updated_at: entry.updated_at.toString(),
-      user: {
-        id: entry.user!.id,
-        name: entry.user!.name!,
-        image: entry.user!.image!,
-      },
-    }));
+    // Return mock data instead of querying Prisma
+    return guestbookEntriesMock;
   } catch (error) {
     console.error("Error getting guestbook entries: ", error);
     return [];
