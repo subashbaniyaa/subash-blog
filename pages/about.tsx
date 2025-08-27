@@ -36,7 +36,7 @@ export default function About({ mdxSource }: { mdxSource: string }) {
           {/* Left Panel */}
           <div className="md:w-1/3 flex flex-col items-start gap-6">
             {/* Scrolling About Title */}
-            <h1 className="text-5xl font-extrabold text-gray-900 dark:text-gray-100">
+            <h1 className="text-5xl mb-10 text-gray-900 dark:text-gray-100 font-boring-heavy">
               About
             </h1>
 
@@ -59,7 +59,7 @@ export default function About({ mdxSource }: { mdxSource: string }) {
           </div>
 
           {/* Right Panel */}
-          <div className="md:w-2/3 prose prose-lg dark:prose-invert space-y-6">
+          <div className="md:w-2/3 prose prose-lg dark:prose-invert space-y-6 md:mt-20">
             <Component components={mdxComponents} />
           </div>
 

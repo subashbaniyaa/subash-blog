@@ -1,3 +1,15 @@
+@font-face {
+  font-family: "Boring Sans A Heavy";
+  src: url("/fonts/Boring-Sans-A-Heavy-trial.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-boring-heavy {
+  font-family: "Boring Sans A Heavy", sans-serif;
+}
+
 /* be-vietnam-pro-100 - vietnamese_latin */
 @font-face {
   font-family: "Be Vietnam Pro";
