@@ -62,7 +62,7 @@ export default function About({ mdxSource }: { mdxSource: string }) {
               </h2>
               {/* Role Text with Boring Sans */}
               <p className="text-gray-500 dark:text-gray-400 text-sm -mt-0.5 font-boring">
-                Web Developer
+                Web Designer
               </p>
 
               {/* Social Icons */}
