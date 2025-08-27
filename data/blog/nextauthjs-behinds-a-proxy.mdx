@@ -174,9 +174,8 @@ First, we need to create a new GitHub OAuth app. Follow these steps:
 1. Go to [https://github.com/settings/developers](https://github.com/settings/developers).
 2. Click on "New OAuth App".
 3. Fill in the details for your app, such as the name, homepage URL, and callback URL.
-4. For the callback URL, enter `https://your-netlify-app.netlify.app/authjs/api/auth/callback/github`.
-5. Click on "Register application".
-6. Copy the `Client ID` and `Client Secret` to put in the Vercel project settings as `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`. From the Vercel dashboard, select your project, and go to Settings → Environment Variables.
+4. Click on "Register application".
+5. Copy the `Client ID` and `Client Secret` to put in the Vercel project settings as `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`. From the Vercel dashboard, select your project, and go to Settings → Environment Variables.
 
 <aside>
 ☝️ Note that you need to generate a new secret when you first open the OAuth app. Keep this secret secured - it is recommended to put it in the Vercel environment variables page immediately after copying.
