@@ -1,4 +1,4 @@
-## Blog. Showcase. Portfolio.
+**Blog. Showcase. Portfolio.**
 
 Tech used to build this site:
 
